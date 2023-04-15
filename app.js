@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 
 const getAllData = async () => {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.goto('https://debank.com/profile/0x1c45e086ed143aef83c1209521a2ff5369f39abc?chain=arb');
 
@@ -24,11 +24,10 @@ const getAllData = async () => {
 
 app.get('/', async (req, res) => {
     const data = await getAllData()
-    console.log(data)
 
     res.status(200).json({
         "message": "hello from server",
-        "data": data,
+        "data": data
     });
 });
 
