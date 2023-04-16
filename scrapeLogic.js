@@ -1,6 +1,22 @@
 require("dotenv").config();
 const puppeteer = require("puppeteer");
 
+const getAllData = async () => {
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.goto('https://debank.com/profile/0x1c45e086ed143aef83c1209521a2ff5369f39abc?chain=arb');
+
+    const element = await page.waitForSelector(
+        '#Overview_defiItem__1e5s9 > div:nth-child(2)'
+    );
+
+    const rawData = await element.evaluate(el => el.textContent);
+    let result = rawData.split(" ");
+    await browser.close();
+    return result
+};
+
+
 const scrapeLogic = async (res) => {
     const browser = await puppeteer.launch({
         args: [
@@ -15,26 +31,10 @@ const scrapeLogic = async (res) => {
                 : puppeteer.executablePath(),
     });
     try {
-        const page = await browser.newPage();
+        let x = await getAllData()
+        console.log(x)
 
-        await page.goto("https://developer.chrome.com/");
-
-        await page.setViewport({ width: 1080, height: 1024 });
-
-        await page.type(".search-box__input", "automate beyond recorder");
-
-        const searchResultSelector = ".search-box__link";
-        await page.waitForSelector(searchResultSelector);
-        await page.click(searchResultSelector);
-
-        const textSelector = await page.waitForSelector(
-            "text/Customize and automate"
-        );
-        const fullTitle = await textSelector.evaluate((el) => el.textContent);
-
-        const logStatement = `The title of this blog post is ${fullTitle}`;
-        console.log(logStatement);
-        res.send(logStatement);
+        res.send(x);
     } catch (e) {
         console.error(e);
         res.send(`Something went wrong while running Puppeteer: ${e}`);
