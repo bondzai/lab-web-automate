@@ -6,7 +6,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 
-const { scrapeDebank } = require("./scrapeLogic");
+const { scrapeDebank } = require("./services/scrapeLogic");
 
 app.get("/debank", (req, res) => {
     scrapeDebank(req, res);
