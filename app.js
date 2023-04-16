@@ -22,12 +22,15 @@ const getAllData = async () => {
     return result
 };
 
-app.get('/', async (req, res) => {
-    const data = await getAllData()
+const { scrapeLogic } = require("./scrapeLogic");
 
+app.get("/scrape", (req, res) => {
+    scrapeLogic(res);
+});
+
+app.get('/', async (req, res) => {
     res.status(200).json({
         "message": "hello from server",
-        "data": data
     });
 });
 
