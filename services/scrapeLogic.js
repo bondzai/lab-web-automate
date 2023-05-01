@@ -20,7 +20,6 @@ const scrape = async (iURL, iSelectedElement) => {
 const getNumber = (iData) => {
     const regex = /\d+\.\d+/;
     let result = iData.match(regex)[0];
-    console.log(result)
     return result
 };
 
@@ -51,7 +50,7 @@ const mapData = (iData) => {
         }
     }
 
-    console.log(result)
+    return result
 };
 
 const scrapeDebank = async (req, res) => {
@@ -66,9 +65,7 @@ const scrapeDebank = async (req, res) => {
 
     let result = await scrape(fullURL, element);
     
-    mapData(result)
-
-    res.json(result);
+    res.json(mapData(result));
 };
 
 module.exports = { scrapeDebank };
