@@ -29,11 +29,8 @@ const mapData = (iData) => {
     result.title = title
     const keys = []
     const values = []
-
     values.push(getNumber(iData[1]))
-
     for (const i in iData) {
-        console.log(iData[i])
         if (i > 1) {
             if (Number(i) % 2 === 0) {
                 keys.push(iData[i])
@@ -42,13 +39,11 @@ const mapData = (iData) => {
             }
         }
     }
-
     for (const i in keys) {
         if (keys[i]) {
             result[keys[i]] = values[i]
         }
     }
-
     return result
 };
 
@@ -61,9 +56,7 @@ const scrapeDebank = async (req, res) => {
     }
     let index = 2;
     let element = `#Overview_defiItem__1e5s9 > div:nth-child(${index})`
-
     let result = await scrape(fullURL, element);
-    
     res.json(mapData(result));
 };
 
