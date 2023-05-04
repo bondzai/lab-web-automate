@@ -47,7 +47,7 @@ const mapData = (iData) => {
     return result
 };
 
-const scrapeDebank = async (req, res) => {
+exports.scrapeDebank = async (req, res) => {
     const { chain } = req.query
     const baseURL = `https://debank.com/profile/0x1c45e086ed143aef83c1209521a2ff5369f39abc`
     let fullURL = baseURL
@@ -60,4 +60,11 @@ const scrapeDebank = async (req, res) => {
     res.json(mapData(result));
 };
 
-module.exports = { scrapeDebank };
+exports.scrapeCryptoSentiment = async (req, res) => {
+    const baseURL = `https://alternative.me/crypto/fear-and-greed-index/`
+    let element = `#main > section > div > div.columns > div:nth-child(2) > div > div > div:nth-child(1) > div:nth-child(2) > div`
+    let result = await scrape(baseURL, element)
+    res.json({
+        "fear_greed_index": Number(result[0])
+    })
+};

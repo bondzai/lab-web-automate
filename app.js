@@ -6,10 +6,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 
-const { scrapeDebank } = require("./services/scrapeLogic");
+const { scrapeDebank, scrapeCryptoSentiment } = require("./services/scrapeLogic");
 
 app.get("/debank", (req, res) => {
     scrapeDebank(req, res);
+});
+
+app.get("/index", (req, res) => {
+    scrapeCryptoSentiment(req, res);
 });
 
 app.get('/', async (req, res) => {
