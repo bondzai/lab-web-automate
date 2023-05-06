@@ -48,16 +48,22 @@ const mapData = (iData) => {
 };
 
 exports.scrapeDebank = async (req, res) => {
-    const { chain } = req.query
-    const baseURL = `https://debank.com/profile/0x1c45e086ed143aef83c1209521a2ff5369f39abc`
-    let fullURL = baseURL
-    if (chain) {
-        fullURL = `${baseURL}?chain=${chain}`
+    try {
+        let { chain, index } = req.query
+        const baseURL = `https://debank.com/profile/0x1c45e086ed143aef83c1209521a2ff5369f39abc`
+        let fullURL = baseURL
+        if (chain) {
+            fullURL = `${baseURL}?chain=${chain}`
+        }
+        if (!index || index < 2) {
+            index = 2
+        }
+        let element = `#Overview_defiItem__1e5s9 > div:nth-child(${index})`
+        let result = await scrape(fullURL, element);
+        res.json(mapData(result));
+    } catch (error) {
+        res.status(500).send(error)
     }
-    let index = 2;
-    let element = `#Overview_defiItem__1e5s9 > div:nth-child(${index})`
-    let result = await scrape(fullURL, element);
-    res.json(mapData(result));
 };
 
 exports.scrapeCryptoSentiment = async (req, res) => {
