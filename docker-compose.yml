@@ -1,0 +1,19 @@
+version: "3"
+services:
+  web-scrape:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: web-scrape
+    container_name: web-scrape-con
+    ports:
+      - 10001:5001
+    environment:
+      - NODE_ENV=production
+    command: ["npm", "start"]
+    networks: 
+      - scrape
+
+networks:
+    scrape:
+        driver: bridge
