@@ -12,10 +12,8 @@ COPY package*.json ./
 RUN yarn
 COPY . .
 
-# Change ownership of node_modules directory
 RUN chown -R node:node /usr/src/app/node_modules
 
-# Switch back to non-root user
 USER node
 
 CMD [ "node", "index.js" ]
