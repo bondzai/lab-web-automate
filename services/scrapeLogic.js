@@ -2,7 +2,10 @@ const puppeteer = require("puppeteer");
 
 const scrape = async (iURL, iSelectedElement) => {
     try {
-        const browser = await puppeteer.launch({ headless: 'new' });
+        const browser = await puppeteer.launch({ 
+            headless: 'new',
+            executablePath: '/usr/bin/google-chrome', 
+        });
         const page = await browser.newPage();
         await page.goto(iURL);
         const element = await page.waitForSelector(iSelectedElement);
