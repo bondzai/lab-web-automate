@@ -3,13 +3,14 @@ const puppeteer = require("puppeteer");
 const scrape = async (iURL, iSelectedElement) => {
     try {
         const browser = await puppeteer.launch({ 
-            // executablePath: '~/.config/chromium',
+            executablePath: '/usr/bin/google-chrome',
             headless: 'new',
             args: [
                 "--disable-gpu",
                 "--disable-dev-shm-usage",
                 "--disable-setuid-sandbox",
                 "--no-sandbox",
+                "--disable-dev-shm-usage",
             ]
         });
         const page = await browser.newPage();
