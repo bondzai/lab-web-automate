@@ -1,14 +1,13 @@
 version: "3"
 services:
   web-scrape:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: web-scrape
+    build: .
+    ports:
+      - "5001:5001"
+    hostname: web-scrape
     container_name: web-scrape-con
     environment:
       - NODE_ENV=production
-    command: ["npm", "start"]
-    network_mode: host
-    dns:
-    - 8.8.8.8
+    volumes:
+      - .:/app
+      - /dev/shm:/dev/shm # Mount /dev/shm to allow Chrome to use shared memory
