@@ -4,7 +4,9 @@ const scrape = async (iURL, iSelectedElement) => {
     try {
         const browser = await puppeteer.launch({ 
             headless: 'new',
-            executablePath: '/usr/bin/google-chrome', 
+            executablePath: '/usr/bin/google-chrome',
+            args: ['--no-sandbox'],
+            timeout: 10000, 
         });
         const page = await browser.newPage();
         await page.goto(iURL);
