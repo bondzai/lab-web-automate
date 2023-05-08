@@ -6,6 +6,7 @@ services:
       - "5001:5001"
     hostname: web-scrape
     container_name: web-scrape-con
+    restart: always
     environment:
       - NODE_ENV=production
     volumes:
