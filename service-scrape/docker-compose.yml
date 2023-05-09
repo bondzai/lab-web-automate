@@ -3,7 +3,7 @@ services:
   web-scrape:
     build: .
     ports:
-      - "5001:5001"
+      - "10000:4000"
     hostname: web-scrape
     container_name: web-scrape-con
     restart: always
